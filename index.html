@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO -->
+  <title>Vacation Countdown Timer — How Many Days Until Your Vacation?</title>
+  <meta name="description" content="Free vacation countdown timer. Enter your vacation date and watch a live countdown tick down to the day, hour, minute, and second. Perfect for trips, cruises, holidays, and travel.">
+  <meta name="keywords" content="vacation countdown, vacation countdown timer, days until vacation, trip countdown, holiday countdown, how many days until my vacation, travel countdown timer">
+  <meta name="author" content="VacationsCountdown">
+  <link rel="canonical" href="https://www.vacationscountdown.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Vacations Countdown — How Many Days Until Your Vacation?">
+  <meta property="og:description" content="Count down the days, hours, minutes and seconds until your next vacation. Free, instant, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.vacationscountdown.com/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Vacations Countdown — Days Until Your Next Trip">
+  <meta name="twitter:description" content="Count down to your next vacation. Free, instant, no sign-up required.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✈️</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- AdSense placeholder — replace with your actual tag after approval -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f6;
+      --surface: #ffffff;
+      --border: #e8e4dc;
+      --border-strong: #d4cfc4;
+      --text-primary: #1c1a16;
+      --text-secondary: #6b6558;
+      --text-muted: #a8a29a;
+      --accent: #c17f3a;
+      --accent-light: #fdf3e7;
+      --accent-dark: #9a6228;
+      --progress-bg: #ede9e0;
+      --progress-fill: #c17f3a;
+      --ad-bg: #f4f1ec;
+      --ad-border: #ddd9d0;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-main: 'DM Sans', sans-serif;
+      --radius: 10px;
+      --radius-lg: 18px;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── Layout ── */
+    .layout {
+      display: grid;
+      grid-template-columns: 180px 1fr 180px;
+      min-height: 100vh;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .ad-sidebar { display: none; }
+    }
+
+    /* ── Sidebar Ads ── */
+    .ad-sidebar {
+      background: var(--ad-bg);
+      border-right: 1px solid var(--ad-border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .ad-sidebar:last-child {
+      border-right: none;
+      border-left: 1px solid var(--ad-border);
+    }
+
+    .ad-slot {
+      width: 160px;
+      min-height: 600px;
+      background: var(--surface);
+      border: 1px dashed var(--ad-border);
+      border-radius: var(--radius);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 11px;
+      text-align: center;
+      gap: 6px;
+    }
+
+    /* ── Main ── */
+    .main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.5rem 3rem;
+      gap: 1.75rem;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      text-align: center;
+      width: 100%;
+      max-width: 540px;
+    }
+
+    .site-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-decoration: none;
+      margin-bottom: 0.25rem;
+    }
+
+    .site-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ── Countdown Card ── */
+    .countdown-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2rem 1.5rem;
+      width: 100%;
+      max-width: 540px;
+      text-align: center;
+    }
+
+    .destination-display {
+      font-family: var(--font-display);
+      font-size: 18px;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+      min-height: 1.4em;
+      font-style: italic;
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 1.25rem;
+    }
+
+    .countdown-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .countdown-number {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .countdown-divider {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--border-strong);
+      align-self: flex-start;
+      padding-top: 6px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 8px;
+    }
+
+    .countdown-grid-inner {
+      display: grid;
+      grid-template-columns: 1fr 12px 1fr 12px 1fr 12px 1fr;
+      gap: 4px;
+      align-items: start;
+      margin-bottom: 1.25rem;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 4px;
+      background: var(--progress-bg);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--progress-fill);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 1s linear;
+    }
+
+    .progress-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .done-message {
+      font-family: var(--font-display);
+      font-size: 22px;
+      color: var(--accent);
+      font-style: italic;
+      display: none;
+      padding: 1rem 0;
+    }
+
+    /* ── Input Card ── */
+    .input-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .input-card h2 {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .field label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .field input[type="text"],
+    .field input[type="date"] {
+      font-family: var(--font-main);
+      font-size: 15px;
+      padding: 10px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+      color: var(--text-primary);
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+    }
+
+    .save-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .save-row input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+      accent-color: var(--accent);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13px;
+      font-family: var(--font-main);
+      font-size: 15px;
+      font-weight: 500;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn:hover { opacity: 0.88; }
+    .btn:active { transform: scale(0.99); }
+
+    /* ── Leaderboard Ad ── */
+    .ad-leaderboard {
+      width: 100%;
+      max-width: 728px;
+      height: 90px;
+      background: var(--ad-bg);
+      border: 1px dashed var(--ad-border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ── Info / FAQ ── */
+    .info-section {
+      width: 100%;
+      max-width: 540px;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .info-section h2 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .info-section p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .faq-item {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+
+    .faq-item h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
+    .faq-item p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ── Footer ── */
+    footer {
+      width: 100%;
+      max-width: 540px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a { color: var(--text-muted); text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .countdown-number { font-size: 36px; }
+      .countdown-card { padding: 1.25rem; }
+      .ad-leaderboard { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- Left sidebar ad -->
+  <aside class="ad-sidebar" aria-label="Advertisement">
+    <div class="ad-slot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span>160×600<br>Ad unit</span>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <header class="site-header">
+      <a class="site-logo" href="/">✈ Vacations Countdown</a>
+      <p class="site-tagline">Count down to the best day of the year</p>
+    </header>
+
+    <!-- Countdown display -->
+    <div class="countdown-card" role="region" aria-label="Vacation countdown timer">
+      <div class="destination-display" id="destination-display">Where are you going?</div>
+
+      <div class="countdown-grid-inner">
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-days">--</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-hours">--</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-minutes">--</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-divider">:</div>
+        <div class="countdown-unit">
+          <div class="countdown-number" id="cd-seconds">--</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+
+      <div class="done-message" id="done-message">🌴 Your vacation has arrived — enjoy every second!</div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-label" id="progress-label">Enter your vacation date below</div>
+    </div>
+
+    <!-- Leaderboard ad -->
+    <div class="ad-leaderboard" role="complementary" aria-label="Advertisement">
+      728×90 Ad unit
+    </div>
+
+    <!-- Input card -->
+    <div class="input-card">
+      <h2>Your vacation</h2>
+      <div class="field">
+        <label for="destination">Destination (optional)</label>
+        <input type="text" id="destination" placeholder="e.g. Cancun, Paris, Hawaii...">
+      </div>
+      <div class="field">
+        <label for="vacation-date">Vacation start date</label>
+        <input type="date" id="vacation-date">
+      </div>
+      <label class="save-row">
+        <input type="checkbox" id="save-data" checked>
+        Remember my vacation on this device
+      </label>
+      <button class="btn" onclick="startCountdown()">Start countdown</button>
+    </div>
+
+    <!-- SEO / FAQ content -->
+    <section class="info-section" aria-label="About Vacations Countdown">
+      <h2>How to use the vacation countdown</h2>
+      <p>Enter your destination and vacation start date, then press Start countdown. The timer counts down in real time — days, hours, minutes, and seconds — until you leave. Bookmark the page and check back daily to watch the excitement build.</p>
+
+      <div class="faq-item">
+        <h3>Will it remember my vacation?</h3>
+        <p>Check the "Remember my vacation" box and your destination and date will be saved on your device. Next time you visit, your countdown picks up right where it left off.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>What trips is this good for?</h3>
+        <p>Any trip you're excited about — beach vacations, cruises, Disney trips, international travel, ski trips, road trips, honeymoons, family reunions, and more. If you have a departure date, this tool is for you.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Can I share my countdown?</h3>
+        <p>Just share the link to vacationscountdown.com with your travel companions and have them enter the same date. Everyone can count down together.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>How far in advance can I set it?</h3>
+        <p>As far out as you'd like — planning a trip a year from now? No problem. The countdown will tick down from years all the way to the final seconds before you leave.</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; <span id="year"></span> VacationsCountdown.com &mdash; Free vacation countdown timer &mdash; <a href="/privacy.html">Privacy</a></p>
+    </footer>
+
+  </main>
+
+  <!-- Right sidebar ad -->
+  <aside class="ad-sidebar" aria-label="Advertisement">
+    <div class="ad-slot">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+      <span>160×600<br>Ad unit</span>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  var ticker = null;
+
+  function pad(n) { return String(Math.floor(n)).padStart(2, '0'); }
+
+  function loadSaved() {
+    try {
+      var dest = localStorage.getItem('vc_destination');
+      var date = localStorage.getItem('vc_date');
+      if (dest) document.getElementById('destination').value = dest;
+      if (date) document.getElementById('vacation-date').value = date;
+    } catch(e) {}
+  }
+
+  function saveTimes() {
+    try {
+      if (document.getElementById('save-data').checked) {
+        localStorage.setItem('vc_destination', document.getElementById('destination').value);
+        localStorage.setItem('vc_date', document.getElementById('vacation-date').value);
+      } else {
+        localStorage.removeItem('vc_destination');
+        localStorage.removeItem('vc_date');
+      }
+    } catch(e) {}
+  }
+
+  function startCountdown() {
+    var dateVal = document.getElementById('vacation-date').value;
+    var dest = document.getElementById('destination').value.trim();
+
+    if (!dateVal) {
+      document.getElementById('progress-label').textContent = 'Please enter your vacation date.';
+      return;
+    }
+
+    saveTimes();
+
+    var targetDate = new Date(dateVal + 'T00:00:00');
+    var now = new Date();
+
+    // Update destination display
+    var destEl = document.getElementById('destination-display');
+    destEl.textContent = dest ? 'Until ' + dest : 'Until your vacation';
+
+    // Update page title
+    document.title = 'Counting down to ' + (dest || 'vacation') + ' — VacationsCountdown';
+
+    // Calculate total trip for progress bar
+    var totalMs = targetDate - now;
+
+    if (ticker) clearInterval(ticker);
+
+    function tick() {
+      var now = new Date();
+      var diff = targetDate - now;
+
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-minutes').textContent = '00';
+        document.getElementById('cd-seconds').textContent = '00';
+        document.getElementById('progress-fill').style.width = '100%';
+        document.getElementById('progress-label').textContent = 'Time to go! 🌴';
+        document.getElementById('done-message').style.display = 'block';
+        document.title = '🌴 Vacation time! — VacationsCountdown';
+        clearInterval(ticker);
+        return;
+      }
+
+      document.getElementById('done-message').style.display = 'none';
+
+      var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-days').textContent = pad(days);
+      document.getElementById('cd-hours').textContent = pad(hours);
+      document.getElementById('cd-minutes').textContent = pad(minutes);
+      document.getElementById('cd-seconds').textContent = pad(seconds);
+
+      // Progress bar — based on a 365-day window from today's perspective
+      var oneYear = 365 * 24 * 60 * 60 * 1000;
+      var pct = Math.max(0, Math.min(100, Math.round((1 - diff / oneYear) * 100)));
+      document.getElementById('progress-fill').style.width = pct + '%';
+
+      if (days === 0) {
+        document.getElementById('progress-label').textContent = 'Today is the day! 🎉';
+      } else if (days === 1) {
+        document.getElementById('progress-label').textContent = 'Tomorrow! Almost there...';
+      } else {
+        document.getElementById('progress-label').textContent = days + ' days to go';
+      }
+    }
+
+    tick();
+    ticker = setInterval(tick, 1000);
+  }
+
+  // Auto-start if saved
+  loadSaved();
+  if (document.getElementById('vacation-date').value) {
+    startCountdown();
+  }
+</script>
+
+</body>
+</html>
