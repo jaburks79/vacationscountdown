@@ -30,7 +30,7 @@
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3328565235324858"
      crossorigin="anonymous"></script>
-     
+
   <!-- Structured Data -->
   <script type="application/ld+json">
   {
@@ -59,9 +59,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- AdSense placeholder — replace with your actual tag after approval -->
-  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -127,17 +124,10 @@
     .ad-slot {
       width: 160px;
       min-height: 600px;
-      background: var(--surface);
-      border: 1px dashed var(--ad-border);
-      border-radius: var(--radius);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: var(--text-muted);
-      font-size: 11px;
-      text-align: center;
-      gap: 6px;
     }
 
     /* ── Main ── */
@@ -193,13 +183,6 @@
       font-style: italic;
     }
 
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-bottom: 1.25rem;
-    }
-
     .countdown-unit {
       display: flex;
       flex-direction: column;
@@ -228,8 +211,6 @@
       font-family: var(--font-display);
       font-size: 36px;
       color: var(--border-strong);
-      align-self: flex-start;
-      padding-top: 6px;
       display: flex;
       align-items: flex-start;
       justify-content: center;
@@ -323,9 +304,7 @@
       transition: border-color 0.15s;
     }
 
-    .field input:focus {
-      border-color: var(--accent);
-    }
+    .field input:focus { border-color: var(--accent); }
 
     .save-row {
       display: flex;
@@ -363,15 +342,6 @@
     .ad-leaderboard {
       width: 100%;
       max-width: 728px;
-      height: 90px;
-      background: var(--ad-bg);
-      border: 1px dashed var(--ad-border);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--text-muted);
     }
 
     /* ── Info / FAQ ── */
@@ -390,10 +360,25 @@
       color: var(--text-primary);
     }
 
+    .info-section h3 {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.4rem;
+    }
+
     .info-section p {
       font-size: 14px;
       color: var(--text-secondary);
       line-height: 1.7;
+    }
+
+    .info-section ul {
+      margin-left: 1.25rem;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.9;
     }
 
     .faq-item {
@@ -411,6 +396,12 @@
     .faq-item p {
       font-size: 13px;
       color: var(--text-secondary);
+    }
+
+    .content-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0.5rem 0;
     }
 
     /* ── Footer ── */
@@ -432,7 +423,8 @@
       .ad-leaderboard { display: none; }
     }
   </style>
-<!-- Google tag (gtag.js) -->
+
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-6M79QHHF9Q"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -449,8 +441,13 @@
   <!-- Left sidebar ad -->
   <aside class="ad-sidebar" aria-label="Advertisement">
     <div class="ad-slot">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      <span>160×600<br>Ad unit</span>
+      <ins class="adsbygoogle"
+           style="display:block;width:160px;min-height:600px"
+           data-ad-client="ca-pub-3328565235324858"
+           data-ad-slot="2429666876"
+           data-ad-format="auto"
+           data-full-width-responsive="false"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </aside>
 
@@ -497,7 +494,13 @@
 
     <!-- Leaderboard ad -->
     <div class="ad-leaderboard" role="complementary" aria-label="Advertisement">
-      728×90 Ad unit
+      <ins class="adsbygoogle"
+           style="display:block;width:100%;height:90px"
+           data-ad-client="ca-pub-3328565235324858"
+           data-ad-slot="2429666876"
+           data-ad-format="horizontal"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <!-- Input card -->
@@ -520,12 +523,38 @@
 
     <!-- SEO / FAQ content -->
     <section class="info-section" aria-label="About Vacations Countdown">
+
       <h2>How to use the vacation countdown</h2>
-      <p>Enter your destination and vacation start date, then press Start countdown. The timer counts down in real time — days, hours, minutes, and seconds — until you leave. Bookmark the page and check back daily to watch the excitement build.</p>
+      <p>Enter your destination and vacation start date, then press <strong>Start countdown</strong>. The timer counts down in real time — days, hours, minutes, and seconds — until you leave. Bookmark the page and check back daily to watch the excitement build.</p>
+
+      <hr class="content-divider">
+
+      <h2>Why Count Down to Your Vacation?</h2>
+      <p>There's something almost magical about watching the days tick down to a trip you've been dreaming about. Whether it's a beach in Cancun, a cruise through the Caribbean, or a first trip to Europe, a vacation countdown makes the anticipation part of the experience. Studies show that anticipating a positive event can boost mood just as much as the event itself — so start counting down and enjoy every day between now and departure.</p>
+
+      <p>VacationsCountdown is completely free, works on any device, and requires no account or app download. Just enter your date and go.</p>
+
+      <hr class="content-divider">
+
+      <h3>Popular Trips People Count Down To</h3>
+      <ul>
+        <li>Beach vacations — Cancun, Punta Cana, Maldives, Hawaii</li>
+        <li>Cruises — Caribbean, Mediterranean, Alaska, Disney Cruise Line</li>
+        <li>Theme parks — Walt Disney World, Universal Studios, Disneyland</li>
+        <li>International travel — Europe, Japan, Australia, Ireland</li>
+        <li>Ski trips — Colorado, Utah, Vermont, Canadian Rockies</li>
+        <li>Honeymoons and anniversary trips</li>
+        <li>Family reunions and group travel</li>
+        <li>Road trips and national park adventures</li>
+        <li>All-inclusive resort getaways</li>
+        <li>Bucket list destinations anywhere in the world</li>
+      </ul>
+
+      <hr class="content-divider">
 
       <div class="faq-item">
         <h3>Will it remember my vacation?</h3>
-        <p>Check the "Remember my vacation" box and your destination and date will be saved on your device. Next time you visit, your countdown picks up right where it left off.</p>
+        <p>Check the "Remember my vacation" box and your destination and date will be saved on your device. Next time you visit, your countdown picks up right where it left off — no re-entering needed.</p>
       </div>
 
       <div class="faq-item">
@@ -535,13 +564,24 @@
 
       <div class="faq-item">
         <h3>Can I share my countdown?</h3>
-        <p>Just share the link to vacationscountdown.com with your travel companions and have them enter the same date. Everyone can count down together.</p>
+        <p>Just share the link to vacationscountdown.com with your travel companions and have them enter the same date. Everyone can count down together from their own device.</p>
       </div>
 
       <div class="faq-item">
         <h3>How far in advance can I set it?</h3>
-        <p>As far out as you'd like — planning a trip a year from now? No problem. The countdown will tick down from years all the way to the final seconds before you leave.</p>
+        <p>As far out as you'd like. Planning a trip a year from now? No problem. The countdown will tick down from years all the way to the final seconds before you leave.</p>
       </div>
+
+      <div class="faq-item">
+        <h3>Does it work on mobile?</h3>
+        <p>Yes — VacationsCountdown is fully mobile-responsive and works on any smartphone or tablet. Bookmark it to your home screen so you can check the countdown anytime, anywhere.</p>
+      </div>
+
+      <div class="faq-item">
+        <h3>Is it free?</h3>
+        <p>Completely free, always. No account, no subscription, no app download required. Just open it, enter your vacation date, and start counting down.</p>
+      </div>
+
     </section>
 
     <footer>
@@ -553,8 +593,13 @@
   <!-- Right sidebar ad -->
   <aside class="ad-sidebar" aria-label="Advertisement">
     <div class="ad-slot">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
-      <span>160×600<br>Ad unit</span>
+      <ins class="adsbygoogle"
+           style="display:block;width:160px;min-height:600px"
+           data-ad-client="ca-pub-3328565235324858"
+           data-ad-slot="2429666876"
+           data-ad-format="auto"
+           data-full-width-responsive="false"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
   </aside>
 
@@ -602,14 +647,11 @@
     var targetDate = new Date(dateVal + 'T00:00:00');
     var now = new Date();
 
-    // Update destination display
     var destEl = document.getElementById('destination-display');
     destEl.textContent = dest ? 'Until ' + dest : 'Until your vacation';
 
-    // Update page title
     document.title = 'Counting down to ' + (dest || 'vacation') + ' — VacationsCountdown';
 
-    // Calculate total trip for progress bar
     var totalMs = targetDate - now;
 
     if (ticker) clearInterval(ticker);
@@ -643,7 +685,6 @@
       document.getElementById('cd-minutes').textContent = pad(minutes);
       document.getElementById('cd-seconds').textContent = pad(seconds);
 
-      // Progress bar — based on a 365-day window from today's perspective
       var oneYear = 365 * 24 * 60 * 60 * 1000;
       var pct = Math.max(0, Math.min(100, Math.round((1 - diff / oneYear) * 100)));
       document.getElementById('progress-fill').style.width = pct + '%';
@@ -661,7 +702,6 @@
     ticker = setInterval(tick, 1000);
   }
 
-  // Auto-start if saved
   loadSaved();
   if (document.getElementById('vacation-date').value) {
     startCountdown();
