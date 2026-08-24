@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- SEO -->
-  <title>Vacation Countdown Timer — How Many Days Until Your Vacation?</title>
+  <title>Vacation Countdown Timer – How Many Days Until Your Vacation?</title>
   <meta name="description" content="Free vacation countdown timer. Enter your vacation date and watch a live countdown tick down to the day, hour, minute, and second. Perfect for trips, cruises, holidays, and travel.">
   <meta name="keywords" content="vacation countdown, vacation countdown timer, days until vacation, trip countdown, holiday countdown, how many days until my vacation, travel countdown timer">
   <meta name="author" content="VacationsCountdown">
   <link rel="canonical" href="https://www.vacationscountdown.com/">
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Vacations Countdown — How Many Days Until Your Vacation?">
+  <meta property="og:title" content="Vacations Countdown – How Many Days Until Your Vacation?">
   <meta property="og:description" content="Count down the days, hours, minutes and seconds until your next vacation. Free, instant, no sign-up required.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.vacationscountdown.com/">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Vacations Countdown — Days Until Your Next Trip">
+  <meta name="twitter:title" content="Vacations Countdown – Days Until Your Next Trip">
   <meta name="twitter:description" content="Count down to your next vacation. Free, instant, no sign-up required.">
 
   <!-- Favicon -->
@@ -27,7 +27,7 @@
 
   <meta name="google-site-verification" content="5kGgoD5uNrZX_KWT9nZW92xTNsW30enqbHbEl2ev76o" />
 
-  <!-- Google AdSense -->
+  <!-- Google AdSense - script only, no ad slots in HTML -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3328565235324858"
      crossorigin="anonymous"></script>
 
@@ -93,7 +93,6 @@
       line-height: 1.6;
     }
 
-    /* ── Layout ── */
     .layout {
       display: grid;
       grid-template-columns: 180px 1fr 180px;
@@ -105,7 +104,6 @@
       .ad-sidebar { display: none; }
     }
 
-    /* ── Sidebar Ads ── */
     .ad-sidebar {
       background: var(--ad-bg);
       border-right: 1px solid var(--ad-border);
@@ -130,7 +128,6 @@
       justify-content: center;
     }
 
-    /* ── Main ── */
     .main {
       display: flex;
       flex-direction: column;
@@ -139,7 +136,6 @@
       gap: 1.75rem;
     }
 
-    /* ── Header ── */
     .site-header {
       text-align: center;
       width: 100%;
@@ -163,7 +159,6 @@
       color: var(--text-muted);
     }
 
-    /* ── Countdown Card ── */
     .countdown-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -257,7 +252,6 @@
       padding: 1rem 0;
     }
 
-    /* ── Input Card ── */
     .input-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -338,13 +332,14 @@
     .btn:hover { opacity: 0.88; }
     .btn:active { transform: scale(0.99); }
 
-    /* ── Leaderboard Ad ── */
     .ad-leaderboard {
       width: 100%;
       max-width: 728px;
+      display: none;
     }
 
-    /* ── Info / FAQ ── */
+    .ad-leaderboard.visible { display: block; }
+
     .info-section {
       width: 100%;
       max-width: 540px;
@@ -404,7 +399,6 @@
       margin: 0.5rem 0;
     }
 
-    /* ── Footer ── */
     footer {
       width: 100%;
       max-width: 540px;
@@ -420,7 +414,7 @@
     @media (max-width: 600px) {
       .countdown-number { font-size: 36px; }
       .countdown-card { padding: 1.25rem; }
-      .ad-leaderboard { display: none; }
+      .ad-leaderboard { display: none !important; }
     }
   </style>
 
@@ -438,17 +432,9 @@
 
 <div class="layout">
 
-  <!-- Left sidebar ad -->
+  <!-- Left sidebar ad - empty div, filled by injectAds() after user interaction -->
   <aside class="ad-sidebar" aria-label="Advertisement">
-    <div class="ad-slot">
-      <ins class="adsbygoogle"
-           style="display:block;width:160px;min-height:600px"
-           data-ad-client="ca-pub-3328565235324858"
-           data-ad-slot="2429666876"
-           data-ad-format="auto"
-           data-full-width-responsive="false"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
+    <div class="ad-slot" id="ad-left"></div>
   </aside>
 
   <main class="main">
@@ -492,16 +478,8 @@
       <div class="progress-label" id="progress-label">Enter your vacation date below</div>
     </div>
 
-    <!-- Leaderboard ad -->
-    <div class="ad-leaderboard" role="complementary" aria-label="Advertisement">
-      <ins class="adsbygoogle"
-           style="display:block;width:100%;height:90px"
-           data-ad-client="ca-pub-3328565235324858"
-           data-ad-slot="2429666876"
-           data-ad-format="horizontal"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
+    <!-- Leaderboard ad - empty div, filled by injectAds() after user interaction -->
+    <div class="ad-leaderboard" id="ad-leaderboard" role="complementary" aria-label="Advertisement"></div>
 
     <!-- Input card -->
     <div class="input-card">
@@ -585,22 +563,14 @@
     </section>
 
     <footer>
-      <p>&copy; <span id="year"></span> VacationsCountdown.com &mdash; Free vacation countdown timer &mdash; <a href="/privacy.html">Privacy</a></p>
+      <p>&copy; <span id="year"></span> VacationsCountdown.com &mdash; Free vacation countdown timer &mdash; <a href="/about.html">About</a> &mdash; <a href="/privacy.html">Privacy</a></p>
     </footer>
 
   </main>
 
-  <!-- Right sidebar ad -->
+  <!-- Right sidebar ad - empty div, filled by injectAds() after user interaction -->
   <aside class="ad-sidebar" aria-label="Advertisement">
-    <div class="ad-slot">
-      <ins class="adsbygoogle"
-           style="display:block;width:160px;min-height:600px"
-           data-ad-client="ca-pub-3328565235324858"
-           data-ad-slot="2429666876"
-           data-ad-format="auto"
-           data-full-width-responsive="false"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-    </div>
+    <div class="ad-slot" id="ad-right"></div>
   </aside>
 
 </div>
@@ -609,8 +579,51 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
   var ticker = null;
+  var adsInjected = false;
 
   function pad(n) { return String(Math.floor(n)).padStart(2, '0'); }
+
+  function injectAds() {
+    if (adsInjected) return;
+    adsInjected = true;
+
+    // Left sidebar
+    var leftSlot = document.getElementById('ad-left');
+    var leftIns = document.createElement('ins');
+    leftIns.className = 'adsbygoogle';
+    leftIns.style.cssText = 'display:block;width:160px;min-height:600px';
+    leftIns.setAttribute('data-ad-client', 'ca-pub-3328565235324858');
+    leftIns.setAttribute('data-ad-slot', '2429666876');
+    leftIns.setAttribute('data-ad-format', 'auto');
+    leftIns.setAttribute('data-full-width-responsive', 'false');
+    leftSlot.appendChild(leftIns);
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
+    // Right sidebar
+    var rightSlot = document.getElementById('ad-right');
+    var rightIns = document.createElement('ins');
+    rightIns.className = 'adsbygoogle';
+    rightIns.style.cssText = 'display:block;width:160px;min-height:600px';
+    rightIns.setAttribute('data-ad-client', 'ca-pub-3328565235324858');
+    rightIns.setAttribute('data-ad-slot', '2429666876');
+    rightIns.setAttribute('data-ad-format', 'auto');
+    rightIns.setAttribute('data-full-width-responsive', 'false');
+    rightSlot.appendChild(rightIns);
+    (adsbygoogle = window.adsbygoogle || []).push({});
+
+    // Leaderboard
+    var lbSlot = document.getElementById('ad-leaderboard');
+    lbSlot.classList.add('visible');
+    var lbIns = document.createElement('ins');
+    lbIns.className = 'adsbygoogle';
+    lbIns.style.cssText = 'display:block;width:100%;height:90px';
+    lbIns.setAttribute('data-ad-client', 'ca-pub-3328565235324858');
+    lbIns.setAttribute('data-ad-slot', '2429666876');
+    lbIns.setAttribute('data-ad-format', 'horizontal');
+    lbIns.setAttribute('data-full-width-responsive', 'true');
+    lbSlot.appendChild(lbIns);
+    (adsbygoogle = window.adsbygoogle || []).push({});
+  }
 
   function loadSaved() {
     try {
@@ -643,16 +656,14 @@
     }
 
     saveTimes();
+    injectAds();
 
     var targetDate = new Date(dateVal + 'T00:00:00');
-    var now = new Date();
 
     var destEl = document.getElementById('destination-display');
     destEl.textContent = dest ? 'Until ' + dest : 'Until your vacation';
 
-    document.title = 'Counting down to ' + (dest || 'vacation') + ' — VacationsCountdown';
-
-    var totalMs = targetDate - now;
+    document.title = 'Counting down to ' + (dest || 'vacation') + ' – VacationsCountdown';
 
     if (ticker) clearInterval(ticker);
 
@@ -668,7 +679,7 @@
         document.getElementById('progress-fill').style.width = '100%';
         document.getElementById('progress-label').textContent = 'Time to go! 🌴';
         document.getElementById('done-message').style.display = 'block';
-        document.title = '🌴 Vacation time! — VacationsCountdown';
+        document.title = '🌴 Vacation time! – VacationsCountdown';
         clearInterval(ticker);
         return;
       }
